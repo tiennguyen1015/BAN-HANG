@@ -112,6 +112,8 @@ public class Product_ImageService {
 
 		String fileNew = UUID.randomUUID() + "_" + files.getOriginalFilename();
 		Path newPath = Paths.get(UPLOAD_DIR, fileNew);
+		Files.copy(files.getInputStream(), newPath);
+
 		productImage.setImageUrl(fileNew);
 		ProductImage save = this.product_ImageRepository.save(productImage);
 		return convertToDTO(save);
