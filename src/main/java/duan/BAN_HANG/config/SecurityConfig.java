@@ -45,6 +45,7 @@ public class SecurityConfig {
 
 	private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 	private final CustomAccessDeniedHandler customAccessDeniedHandler;
+
 	@Value("${hoidanit.jwt.base64-secret}")
 	private String jwtKey;
 
@@ -98,7 +99,8 @@ public class SecurityConfig {
 		CorsConfiguration configuration = new CorsConfiguration();
 
 		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://127.0.0.1:3000",
-				"http://localhost:4173", "http://localhost:5173", "https://yourdomain.com"));
+				"http://localhost:4173", "http://localhost:5173", "https://yourdomain.com",
+				"https://ban-hang-frontend-production.up.railway.app"));
 
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
 
@@ -119,7 +121,7 @@ public class SecurityConfig {
 
 		};
 
-		http.csrf(csrf -> csrf.disable())
+		http.csrf(csrf -> csrf.disable()).cors(cors -> cors.configurationSource(corsConfigurationSource()))
 				.authorizeHttpRequests(auth -> auth.requestMatchers(WHITELIST).permitAll()
 						.requestMatchers(HttpMethod.GET, "/posts/**", "/comments", "/categories", "/products/**")
 						.permitAll().requestMatchers("/users/**").hasRole("ADMIN").anyRequest().authenticated())
@@ -129,7 +131,7 @@ public class SecurityConfig {
 
 						.jwt((jwt) -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
 				.formLogin(form -> form.disable());
-		http.csrf(csrf -> csrf.disable());
+//		http.csrf(csrf -> csrf.disable());
 		return http.build();
 	}
 //	
