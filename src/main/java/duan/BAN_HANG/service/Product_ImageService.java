@@ -28,7 +28,7 @@ public class Product_ImageService {
 	private final Product_ImageRepository product_ImageRepository;
 	private final ProductRepository productRepository;
 
-	private static final String UPLOAD_DIR = "uploads";
+	private static final String UPLOAD_DIR = "/app/uploads";
 
 	public ProductImgReponseDTO convertToDTO(ProductImage productImage) {
 		ProductImgReponseDTO dto = ProductImgReponseDTO.builder().id(productImage.getId())
