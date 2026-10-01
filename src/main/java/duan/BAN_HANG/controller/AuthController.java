@@ -26,6 +26,7 @@ import duan.BAN_HANG.reponseDTO.ExchangeTokenResponse;
 import duan.BAN_HANG.reponseDTO.LoginReponseDTO;
 import duan.BAN_HANG.reponseDTO.UserReponseDTO;
 import duan.BAN_HANG.requestDTO.LoginRequestDTO;
+import duan.BAN_HANG.requestDTO.VerifyOtpRequestDTO;
 import duan.BAN_HANG.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -112,6 +113,24 @@ public class AuthController {
 	public ResponseEntity<ApiResponse<UserReponseDTO>> postRegister(@Valid @RequestBody User user) {
 		UserReponseDTO newUser = this.userService.Register(user);
 		return ApiResponse.success(newUser, "đăng kí thành công");
+	}
+
+	@PostMapping("register1")
+	public ResponseEntity<ApiResponse<Void>> Register(@Valid @RequestBody User user) {
+		this.userService.Register1(user);
+		return ApiResponse.success(null, "Mã xác nhận đã được gửi đến email của bạn");
+	}
+
+	@PostMapping("verify-email")
+	public ResponseEntity<ApiResponse<UserReponseDTO>> verifyEmail(@RequestBody VerifyOtpRequestDTO request) {
+		UserReponseDTO user = userService.verifyEmail(request.getEmail(), request.getOtp());
+		return ApiResponse.success(user, "Xác nhận email và đăng ký thành công");
+	}
+
+	@PostMapping("/resend-otp")
+	public ResponseEntity<ApiResponse<String>> resendOtp(@RequestBody VerifyOtpRequestDTO request) {
+		UserReponseDTO user = userService.resendOtp(request.getEmail());
+		return ApiResponse.success("Mã xác nhận mới đã được gửi vào email");
 	}
 
 }

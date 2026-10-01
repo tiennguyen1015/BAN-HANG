@@ -117,7 +117,8 @@ public class SecurityConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		String[] WHITELIST = { "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/auth/login", "/auth/refresh",
-				"/auth/refresh-with-cookei", "/auth/register", "/auth/logout", "/uploads/**",
+				"/auth/refresh-with-cookei", "/auth/register", "/auth/logout", "/uploads/**", "/auth/register1",
+				"/auth/verify-email"
 
 		};
 
